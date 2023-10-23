@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Update Order</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #ffecd1;
+            margin: 0;
+            padding: 0;
+        }
+
+        .update-form {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="number"] {
+            width: 100%;
+            padding: 8px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .form-group button {
+            background-color: #000;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        .form-group button:hover {
+            background-color: #0056b3;
+        }
+
+        .cancel-link {
+            text-decoration: none;
+            color: #fff;
+            background-color: #000;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            font-size: 18px;
+            margin-left: 10px;
+        }
+
+        .cancel-link:hover {
+            background-color: #0056b3;
+        }
+
+
+    </style>
+</head>
+
+<body>
+    <div class="update-form">
+        <h2>Update Order</h2>
+        <form method="POST" action="/update/{{ order[0] }},{{ customerid }}">
+            <div class="form-group">
+                <label for="quantity">Quantity:</label>
+                <input type="number" id="quantity" name="quantity" value="{{ order[5] }}" required>
+            </div>
+            <div class="form-group">
+                <label for="size">Size:</label>
+                <input type="text" id="size" name="size" value="{{ order[6] }}" required>
+            </div>
+            <div class="form-group">
+                <label for="topping">Topping:</label>
+                <input type="text" id="topping" name="topping" value="{{ order[7] }}" required>
+            </div>
+            <div class="form-group">
+                <label for="crust">Crust:</label>
+                <input type="text" id="crust" name="crust" value="{{ order[8] }}" required>
+            </div>
+            <div class="form-group">
+                <button type="submit">Update Order</button>
+                <a href="/orders/{{ customerid }}" class="cancel-link">Cancel</a>
+            </div>
+        </form>
+        {% if error %}
+        <div style="color: red; margin-top: 10px;">
+            {{ error }}
+        </div>
+        {% endif %}
+    </div>
+</body>
+
+</html>

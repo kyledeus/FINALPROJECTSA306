@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Store</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.5;
+            background-color: #ffecd1; /* Soft peach background color */
+            margin: 0;
+            padding: 0;
+
+
+        }
+
+
+
+        .welcome-message {
+            font-size: 36px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #ff5733; /* Dark orange color for the welcome message */
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); /* Text shadow for emphasis */
+        }
+
+        .orders-link {
+            font-size: 24px;
+            color: #ff5733; /* Dark orange color for the orders link */
+            text-decoration: none;
+            border-bottom: 2px solid #c94c4c; /* Underline using border */
+            transition: border-bottom 0.3s ease; /* Smooth transition for the underline */
+        }
+
+        .orders-link:hover {
+            border-bottom: 2px solid #8c2d2d; /* Darker red color on hover */
+        }
+
+        .pizza-item {
+            border: 2px solid black; /* Dark orange border for each pizza item */
+            border-radius: 10px; /* Rounded corners for the pizza items */
+            padding: 20px;
+            margin-bottom: 20px;
+            background-color: floralwhite; /* White background for each pizza item */
+        }
+
+        .pizza-item img {
+            margin-right: 20px;
+            border-radius: 10px; /* Rounded corners for pizza images */
+        }
+
+        .order-form {
+            margin-top: 20px;
+        }
+
+           .order-button {
+            float: right;
+            margin-top: 0px;
+            background-color: #000;
+            color: white;
+            padding: 5px 10px;
+            height: 30px;
+            width: 100px;
+            text-decoration: none;
+            border: 1px solid black;
+            border-radius: 5px;
+            font-size: 14px; /* Adjust font size to fit the text */
+        }
+
+        .order-button:hover {
+            background-color: orange; /* Darker green color on hover */
+        }
+         .image-container {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 20px; /* Add some margin if needed */
+    }
+
+    .image-container img {
+        margin-bottom: -10px;
+    }
+    </style>
+</head>
+
+<body>
+    {% for y in user %}
+    <div class="welcome-message">
+        <img src="/static/images/pizza-icon.jpg.png" alt="Pizza Icon" width="50" height="50" style="margin-bottom: -10px;">
+        Welcome, <span style="color: #ff5733;">{{ y[1] }}!</span>
+    </div>
+
+    <p>See your orders <a class="orders-link" href="/orders/{{ y[0] }}">here</a></p>
+        <div class="image-container">
+        <img src="/static/images/pizzaloko.png" alt="Pizza Icon" width="200" height="100">
+        <img src="/static/images/pizzaloko.png" alt="Pizza Icon" width="200" height="100">
+        <img src="/static/images/pizzaloko.png" alt="Pizza Icon" width="200" height="100">
+        <img src="/static/images/pizzaloko.png" alt="Pizza Icon" width="200" height="100">
+        <img src="/static/images/pizzaloko.png" alt="Pizza Icon" width="200" height="100">
+        <img src="/static/images/pizzaloko.png" alt="Pizza Icon" width="200" height="100">
+    </div>
+
+    {% for x in products %}
+    <div class="pizza-item">
+        <img src="{{ url_for('static', filename='/'.join(['images', x[3]])) }}" width="128" height="128" />
+        <b>{{ x[0] }} : {{ x[1] }}</b><br>
+        Php {{ '{:,.2f}'.format(x[2]) }}<br>
+        <form method="POST" action="/order/{{ x[0] }},{{ y[0] }}" class="order-form">
+            <div class="quantity">
+                <label for="Quantity">Quantity:</label>
+                <select name="quantity" id="quantity">
+                    {% for qty in range(1, 6) %}
+                    <option value="{{ qty }}">{{ qty }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="size">
+                <label>Size:</label>
+                <input type="radio" name="size" value="small"> Small
+                <input type="radio" name="size" value="large"> Large
+            </div>
+            <label for="topping">Topping:</label>
+            <select name="topping" id="topping">
+                <option value=""></option>
+                <option value="cheese">Cheese</option>
+                <option value="pepperoni">Pepperoni</option>
+                <option value="bacon">Bacon</option>
+                <option value="sausage">Sausage</option>
+                <!-- other topping options -->
+            </select>
+
+            <label for="crust">Crust:</label>
+            <select name="crust" id="crust">
+                <option value=""></option>
+                <option value="thin">Thin Crust</option>
+                <option value="thick">Thick Crust</option>
+                <option value="Stuffed Crust">Stuffed Crust</option>
+                <option value="Cracker Crust">Cracker Crust</option>
+                <!-- other crust options -->
+            </select>
+            <button type="submit" class="order-button">Order Now</button>
+        </form>
+    </div>
+    {% endfor %}
+    {% endfor %}
+</body>
+
+</html>

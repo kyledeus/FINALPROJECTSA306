@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Store</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #ffecd1;
+            margin: 0;
+            padding: 0;
+        }
+
+        h3 {
+            background-color: #333;
+            color: white;
+            padding: 10px;
+            margin: 0;
+        }
+
+        .welcome-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .welcome-icon {
+            margin-right: 10px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+
+        img {
+            display: block;
+            margin: 0 auto;
+        }
+
+        a {
+            text-decoration: none;
+            color: #007bff;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .total-row {
+            background-color: #333;
+            color: white;
+            font-weight: bold;
+        }
+
+        .add-order-link {
+            margin-top: 20px;
+            display: block;
+        }
+
+        .welcome-message {
+            font-size: 36px;
+            font-weight: bold;
+            color: #ff5733; /* Dark orange color for the welcome message */
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); /* Text shadow for emphasis */
+        }
+          .delete-button {
+        text-decoration: none;
+        color: whitesmoke;
+               border-radius: 3px;
+              background-color: #000;
+        border: 1px solid #000; /* Remove the border */
+    }
+           .action-buttons {
+        display: flex;
+    }
+
+    .action-link {
+        text-decoration: none;
+        color: whitesmoke;
+        border-radius: 3px;
+        background-color: #000;
+        border: 1px solid #000;
+        margin-right: 10px; /* Add some space between the links */
+        padding: 5px 10px;
+    }
+
+    .action-link:hover {
+        background-color: #333;
+        border-color: #333;
+    }
+    </style>
+</head>
+
+<body>
+    {% for y in user %}
+    <div class="welcome-container">
+        <div class="welcome-icon">
+            <img src="/static/images/pizza-icon.jpg.png" alt="Pizza Icon" width="50" height="50">
+        </div>
+        <div class="welcome-message">
+            Welcome, <span style="color: #ff5733;">{{ y[1] }}!</span>
+        </div>
+    </div>
+    <h2>List of Orders</h2>
+    <table>
+        <tr>
+            <th>Order No</th>
+            <th>Date</th>
+            <th>Product ID</th>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Size</th>
+            <th>Topping</th>
+            <th>Crust</th>
+            <th>Amount</th>
+            <th>Images</th>
+            <th></th>
+            <th></th>
+        </tr>
+        {% for x in orders %}
+        <tr>
+            <td>{{ x[0] }}</td>
+            <td>{{ x[1] }}</td>
+            <td>{{ x[2] }}</td>
+            <td>{{ x[3] }}</td>
+            <td align="right">{{ '{:,.2f}'.format(x[4]) }}</td>
+            <td align="center">{{ x[5] }}</td>
+            <td align="center">{{ x[6] }}</td>
+            <td>{{ x[7] }}</td>
+            <td>{{ x[8] }}</td>
+            <td align="right">{{ '{:,.2f}'.format(x[9]) }}</td>
+            <td><img src="{{ url_for('static', filename='images2/' + 'images' + '/' + x[3] + '.jpg') }}" width="64"
+                    height="64" /></td>
+            <td>
+                <!-- Inside the loop where you display orders -->
+<td class="action-buttons">
+    <a href="/update/{{ x[0] }},{{ y[0] }}" class="action-link update-link">Update</a>
+    <a href="/delete/{{ x[0] }},{{ y[0] }}" class="action-link delete-link">Delete</a>
+</td>
+
+            </td>
+        </tr>
+        {% endfor %}
+        <tr class="total-row">
+            <td colspan="4"><b>TOTAL</b></td>
+            <td align="right"><b>{{ '{:,.2f}'.format(total) }}</b></td>
+            <td align="center"><b>{{ orders|length }}</b></td>
+        </tr>
+    </table>
+    <div class="add-order-link">
+        Add order <a href="/catalog/{{ y[0] }}">here</a>.
+    </div>
+    {% endfor %}
+</body>
+
+</html>

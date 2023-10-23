@@ -1,0 +1,17 @@
+#gallery{
+    width: 100%;
+    height: 100%;
+}
+#cat{
+    float: left;
+    width: 200px;
+    height: 200px;
+    padding: 10px;
+    text-align: center;
+    border-radius: 25px;
+    border: 2px solid #73AD21;
+    margin: 5px;
+}
+td{
+    padding: 5px;
+}
